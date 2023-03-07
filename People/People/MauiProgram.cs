@@ -1,4 +1,6 @@
-﻿namespace People;
+﻿using System.IO;
+
+namespace People;
 
 public static class MauiProgram
 {
@@ -13,7 +15,8 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		// TODO: Add statements for adding PersonRepository as a singleton
+		string dbPath = FileAccessHelper.GetLocalFilePath("people.db3");
+		builder.Services.AddSingleton<PersonRepository>(s => ActivatorUtilities.CreateInstance<PersonRepository>(s, dbPath));
 			
         return builder.Build();
 	}
